@@ -17,7 +17,7 @@ export default function MarqueeItem({
         transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
         className="flex flex-shrink-0"
       >
-        {items.map((item: any, index: number) => {
+        {items.map((item: string, index: number) => {
           return (
             <span
               key={index}
@@ -35,7 +35,7 @@ export default function MarqueeItem({
         transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
         className="flex flex-shrink-0"
       >
-        {items.map((item: any, index: number) => {
+        {items.map((item: string, index: number) => {
           return (
             <span
               key={index}
