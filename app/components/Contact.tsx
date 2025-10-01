@@ -9,7 +9,6 @@ const Contact = () => {
         <h3 className="text-2xl mb-4">Contacts</h3>
         <h2 className="text-4xl md:text-5xl font-bold mb-4">Have a project?</h2>
         <h2 className="text-4xl md:text-5xl font-bold mb-6">Let’s talk!</h2>
-        <button className="btn btn-primary text-md w-[120px]">Submit</button>
       </div>
 
       {/* Right Form Section */}
@@ -29,6 +28,7 @@ const Contact = () => {
           className="textarea textarea-bordered w-full"
           rows={4}
         ></textarea>
+        <button className="btn btn-primary text-md w-full">Submit</button>
       </form>
     </section>
   );
