@@ -19,7 +19,7 @@ export async function sendChatMessage(message: Message): Promise<Message> {
     { expiresIn: "1h" }
   );
 
-  const response = await fetch(process.env.N8N_PUBLIC_URL!!, {
+  const response = await fetch(process.env.N8N_PUBLIC_URL!, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
