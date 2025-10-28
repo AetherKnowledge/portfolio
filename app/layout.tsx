@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto, Roboto_Mono } from "next/font/google";
 import { cookies } from "next/headers";
+import FloatingChatbotButton from "./components/Chatbot/FloatingChatbotButton";
 import Navbar from "./components/Navbar";
 import "./globals.css";
 
@@ -33,6 +34,8 @@ export default async function RootLayout({
       <body className={`${roboto.variable} ${robotoMono.variable} antialiased`}>
         <Navbar />
         {children}
+        {/* Floating Chatbot available on every page */}
+        <FloatingChatbotButton />
       </body>
     </html>
   );
