@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { sendChatMessage } from "./ChatbotActions";
 import MessageBubble from "./MessageBubble";
 import { Message, UserType } from "./types";
 
 const Chatbot = () => {
+  // Generate a unique session ID for the chat session that persists across re-renders
+  const sessionId = useRef<string>(uuidv4()).current;
+
   const [messages, setMessages] = useState<Message[]>([
     {
       type: UserType.AI,
@@ -36,7 +40,7 @@ const Chatbot = () => {
     setInputValue("");
     setIsLoading(true);
 
-    const aiResponse = await sendChatMessage(newMessage);
+    const aiResponse = await sendChatMessage(newMessage, sessionId);
     if (aiResponse) {
       setMessages((prev) => [...prev, aiResponse]);
     }

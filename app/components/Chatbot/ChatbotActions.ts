@@ -1,16 +1,16 @@
 "use server";
 
 import jwt from "jsonwebtoken";
-import { v4 as uuidv4 } from "uuid";
 import { Message, UserType } from "./types";
 
 export type ChatBotOutput = {
   output: string;
 };
 
-export async function sendChatMessage(message: Message): Promise<Message> {
-  const sessionId = uuidv4();
-
+export async function sendChatMessage(
+  message: Message,
+  sessionId: string
+): Promise<Message> {
   const token = jwt.sign(
     {
       sessionId,

@@ -35,7 +35,7 @@ export default function FloatingChatbotButton() {
     };
   }, [open]);
 
-  // Trap focus to the panel when opened (minimal)
+  // Trap focus to the panel when opened
   useEffect(() => {
     if (open) {
       // focus the first focusable in panel or the panel itself
