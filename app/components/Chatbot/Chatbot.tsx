@@ -1,10 +1,16 @@
 "use client";
 
+import { env } from "next-runtime-env";
 import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { sendChatMessage } from "./ChatbotActions";
 import MessageBubble from "./MessageBubble";
 import { Message, UserType } from "./types";
+
+type ChatBotResponse = {
+  type: string;
+  metadata?: object;
+  content?: string;
+};
 
 const Chatbot = () => {
   // Generate a unique session ID for the chat session that persists across re-renders
@@ -31,19 +37,39 @@ const Chatbot = () => {
   const handleSend = async () => {
     if (!inputValue.trim() || isLoading) return;
 
-    const newMessage: Message = {
+    const newUserMessage: Message = {
       type: UserType.USER,
       content: inputValue,
     };
 
-    setMessages((prev) => [...prev, newMessage]);
+    setMessages((prev) => [...prev, newUserMessage]);
     setInputValue("");
     setIsLoading(true);
 
-    const aiResponse = await sendChatMessage(newMessage, sessionId);
-    if (aiResponse) {
-      setMessages((prev) => [...prev, aiResponse]);
-    }
+    // Temporary AI message placeholder
+    const aiMessageIndex = messages.length + 1;
+    setMessages((prev) => [...prev, { type: UserType.AI, content: "" }]);
+
+    await sendChatMessage(inputValue, sessionId, (chunk: string) => {
+      setMessages((prev) => {
+        const updated = [...prev];
+        updated[aiMessageIndex] = {
+          type: UserType.AI,
+          content: (updated[aiMessageIndex].content || "") + chunk,
+        };
+        return updated;
+      });
+    }).catch((err) => {
+      setMessages((prev) => {
+        const updated = [...prev];
+        updated[aiMessageIndex] = {
+          type: UserType.AI,
+          content:
+            "Sorry, there was an error processing your message. Please try again later.",
+        };
+        return updated;
+      });
+    });
 
     setIsLoading(false);
   };
@@ -65,15 +91,12 @@ const Chatbot = () => {
           </div>
         )}
         {messages.map((msg, index) => (
-          <MessageBubble key={index} {...msg} />
+          <MessageBubble
+            key={index}
+            message={msg}
+            loading={isLoading && index === messages.length - 1}
+          />
         ))}
-        {isLoading && (
-          <div className="chat chat-start">
-            <div className="chat-bubble">
-              <span className="loading loading-dots loading-sm"></span>
-            </div>
-          </div>
-        )}
         <div ref={messagesEndRef} />
       </div>
 
@@ -109,5 +132,49 @@ const Chatbot = () => {
     </div>
   );
 };
+
+async function sendChatMessage(
+  message: string,
+  sessionId: string,
+  onChunk: (chunk: string) => void
+) {
+  const response = await fetch(env("NEXT_PUBLIC_N8N_URL")!, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      message,
+      sessionId,
+    }),
+  });
+
+  if (!response.body) {
+    throw new Error("No response body");
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    buffer += decoder.decode(value, { stream: true });
+
+    const parts = buffer.split("\n");
+    buffer = parts.pop() || ""; // save last partial JSON for next iteration
+
+    for (const part of parts) {
+      try {
+        const parsed: ChatBotResponse = JSON.parse(part);
+        onChunk(parsed.content || "");
+      } catch (err) {
+        console.warn("Invalid JSON skipped:", part);
+      }
+    }
+  }
+}
 
 export default Chatbot;

@@ -1,8 +1,14 @@
 import ReactMarkdown from "react-markdown";
 import { Message, UserType } from "./types";
 
-const MessageBubble = ({ type, content }: Message) => {
-  const isUser = type === UserType.USER;
+const MessageBubble = ({
+  message,
+  loading,
+}: {
+  message: Message;
+  loading: boolean;
+}) => {
+  const isUser = message.type === UserType.USER;
   const chatPosition = isUser ? "chat chat-end" : "chat chat-start";
   const bubbleColor = isUser ? "chat-bubble-primary" : "chat-bubble";
 
@@ -47,7 +53,11 @@ const MessageBubble = ({ type, content }: Message) => {
       <div
         className={`chat-bubble ${bubbleColor} prose prose-sm max-w-xs break-words`}
       >
-        <ReactMarkdown>{content}</ReactMarkdown>
+        {loading ? (
+          <span className="loading loading-dots loading-sm"></span>
+        ) : (
+          <ReactMarkdown>{message.content}</ReactMarkdown>
+        )}
       </div>
     </div>
   );

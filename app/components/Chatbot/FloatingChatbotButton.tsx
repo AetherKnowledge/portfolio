@@ -90,71 +90,72 @@ export default function FloatingChatbotButton() {
         <span className="sr-only">{open ? "Close chat" : "Open chat"}</span>
       </button>
 
-      {/* Chat Panel */}
-      {open && (
-        <div
-          id="floating-chatbot-panel"
-          role="dialog"
-          aria-modal="true"
-          ref={panelRef}
-          className="pointer-events-auto absolute bottom-16 right-0 flex h-[500px] w-[90vw] max-w-md flex-col overflow-hidden rounded-2xl border border-base-300 bg-base-100 shadow-2xl outline-none"
-          tabIndex={-1}
-        >
-          <div className="flex items-center justify-between border-b border-base-300 bg-gradient-to-r from-primary to-secondary px-4 py-3">
-            <div className="flex items-center gap-2">
-              <div className="relative">
-                <div className="w-8 h-8 rounded-full bg-primary-content/20 flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="w-5 h-5 text-primary-content"
-                  >
-                    <path d="M16.5 7.5h-9v9h9v-9z" />
-                    <path
-                      fillRule="evenodd"
-                      d="M8.25 2.25A.75.75 0 019 3v.75h2.25V3a.75.75 0 011.5 0v.75H15V3a.75.75 0 011.5 0v.75h.75a3 3 0 013 3v.75H21A.75.75 0 0121 9h-.75v2.25H21a.75.75 0 010 1.5h-.75V15H21a.75.75 0 010 1.5h-.75v.75a3 3 0 01-3 3h-.75V21a.75.75 0 01-1.5 0v-.75h-2.25V21a.75.75 0 01-1.5 0v-.75H9V21a.75.75 0 01-1.5 0v-.75h-.75a3 3 0 01-3-3v-.75H3A.75.75 0 013 15h.75v-2.25H3a.75.75 0 010-1.5h.75V9H3a.75.75 0 010-1.5h.75v-.75a3 3 0 013-3h.75V3a.75.75 0 01.75-.75z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-success rounded-full border-2 border-primary"></span>
+      {/* Chat Panel (kept mounted to preserve session) */}
+      <div
+        id="floating-chatbot-panel"
+        role="dialog"
+        aria-modal={open}
+        aria-hidden={!open}
+        ref={panelRef}
+        className={`pointer-events-auto absolute bottom-16 right-0 flex h-[500px] w-[90vw] max-w-md flex-col overflow-hidden rounded-2xl border border-base-300 bg-base-100 shadow-2xl outline-none ${
+          open ? "" : "hidden"
+        }`}
+        tabIndex={-1}
+      >
+        <div className="flex items-center justify-between border-b border-base-300 bg-gradient-to-r from-primary to-secondary px-4 py-3">
+          <div className="flex items-center gap-2">
+            <div className="relative">
+              <div className="w-8 h-8 rounded-full bg-primary-content/20 flex items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-5 h-5 text-primary-content"
+                >
+                  <path d="M16.5 7.5h-9v9h9v-9z" />
+                  <path
+                    fillRule="evenodd"
+                    d="M8.25 2.25A.75.75 0 019 3v.75h2.25V3a.75.75 0 011.5 0v.75H15V3a.75.75 0 011.5 0v.75h.75a3 3 0 013 3v.75H21A.75.75 0 0121 9h-.75v2.25H21a.75.75 0 010 1.5h-.75V15H21a.75.75 0 010 1.5h-.75v.75a3 3 0 01-3 3h-.75V21a.75.75 0 01-1.5 0v-.75h-2.25V21a.75.75 0 01-1.5 0v-.75H9V21a.75.75 0 01-1.5 0v-.75h-.75a3 3 0 01-3-3v-.75H3A.75.75 0 013 15h.75v-2.25H3a.75.75 0 010-1.5h.75V9H3a.75.75 0 010-1.5h.75v-.75a3 3 0 013-3h.75V3a.75.75 0 01.75-.75z"
+                    clipRule="evenodd"
+                  />
+                </svg>
               </div>
-              <div>
-                <h2 className="text-sm font-semibold text-primary-content">
-                  AI Assistant
-                </h2>
-                <p className="text-xs text-primary-content/80">Online</p>
-              </div>
+              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-success rounded-full border-2 border-primary"></span>
             </div>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="btn btn-ghost btn-sm btn-circle text-primary-content hover:bg-primary-content/20"
-              aria-label="Close chat"
+            <div>
+              <h2 className="text-sm font-semibold text-primary-content">
+                AI Assistant
+              </h2>
+              <p className="text-xs text-primary-content/80">Online</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            className="btn btn-ghost btn-sm btn-circle text-primary-content hover:bg-primary-content/20"
+            aria-label="Close chat"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="h-5 w-5"
+              aria-hidden="true"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="h-5 w-5"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18 18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
-          <div className="min-h-0 flex-1 bg-base-200/50">
-            <Chatbot />
-          </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
         </div>
-      )}
+        <div className="min-h-0 flex-1 bg-base-200/50">
+          <Chatbot />
+        </div>
+      </div>
     </div>
   );
 }

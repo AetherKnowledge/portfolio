@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PublicEnvScript } from "next-runtime-env";
 import { Roboto, Roboto_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import FloatingChatbotButton from "./components/Chatbot/FloatingChatbotButton";
@@ -31,6 +32,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en" data-theme={theme}>
+      <head>
+        <PublicEnvScript />
+      </head>
       <body className={`${roboto.variable} ${robotoMono.variable} antialiased`}>
         <Navbar />
         {children}
