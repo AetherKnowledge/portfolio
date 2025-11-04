@@ -3,6 +3,7 @@
 import { env } from "next-runtime-env";
 import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { generateToken } from "./ChatbotActions";
 import MessageBubble from "./MessageBubble";
 import { Message, UserType } from "./types";
 
@@ -138,10 +139,13 @@ async function sendChatMessage(
   sessionId: string,
   onChunk: (chunk: string) => void
 ) {
+  const token = await generateToken(sessionId, message);
+
   const response = await fetch(env("NEXT_PUBLIC_N8N_URL")!, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       message,
