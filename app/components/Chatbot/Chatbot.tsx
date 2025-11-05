@@ -111,7 +111,7 @@ const Chatbot = () => {
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
             disabled={isLoading}
-            className="input input-bordered flex-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="input input-bordered text-base-content flex-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
           />
           <button
             onClick={handleSend}
