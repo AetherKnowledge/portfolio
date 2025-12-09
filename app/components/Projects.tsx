@@ -35,7 +35,7 @@ const Projects = () => {
       title: "Akasha",
       tags: ["Kotlin", "Jetpack Compose", "Supabase", "Android", "N8N"],
       desc: "An Android chatbot application built with Jetpack Compose and Kotlin, featuring a modern UI with markdown support for rich text conversations.",
-      img: "/akasha/1.png",
+      img: "/akasha/1.svg",
       link: "https://github.com/AetherKnowledge/akasha",
     },
   ];
