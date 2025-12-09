@@ -7,3 +7,26 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  tags        String[]
+  imageUrl    String?
+  githubUrl   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Settings {
+  id       Int      @id @default(1)
+  name     String   @default("John Christian Rosuelo")
+  skills   String[] @default(["Kotlin", "Java", "JavaScript", "TypeScript", "Next.js", "React", "Node.js", "Express", "Supabase", "PostgreSQL", "Git", "GitHub", "HTML", "CSS", "Tailwind CSS"])
+  about    String   @default("Hello")
+  job      String   @default("Software Developer")
+  email    String   @default("john@example.com")
+  github   String   @default("https://github.com/john")
+  linkedin String?
+}

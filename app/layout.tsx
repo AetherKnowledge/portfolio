@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PublicEnvScript } from "next-runtime-env";
 import { Roboto, Roboto_Mono } from "next/font/google";
 import { cookies } from "next/headers";
+import PopupProvider from "./components/Popup/PopupProvider";
 import "./globals.css";
 
 const roboto = Roboto({
@@ -34,7 +35,7 @@ export default async function RootLayout({
         <PublicEnvScript />
       </head>
       <body className={`${roboto.variable} ${robotoMono.variable} antialiased`}>
-        {children}
+        <PopupProvider>{children}</PopupProvider>
       </body>
     </html>
   );

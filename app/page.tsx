@@ -4,18 +4,23 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
-import Projects from "./components/Projects";
+import { getProjects } from "./components/Projects/ProjectActions";
+import Projects from "./components/Projects/Projects";
+import { getSettings } from "./components/SettingsActions";
 
-export default function Home() {
+export default async function Home() {
+  const projects = await getProjects();
+  const settings = await getSettings();
+
   return (
     <>
-      <Navbar />
+      <Navbar settings={settings} />
       <main className="bg-base-200 min-h-screen text-base-content">
-        <Hero />
-        <About />
-        <Projects />
+        <Hero settings={settings} />
+        <About settings={settings} />
+        <Projects projects={projects} />
         <Contact />
-        <Footer />
+        <Footer settings={settings} />
       </main>
       <FloatingChatbotButton />
     </>

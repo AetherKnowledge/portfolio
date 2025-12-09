@@ -1,12 +1,19 @@
 "use client";
+import { Settings } from "@/app/generated/prisma/browser";
 import { motion } from "motion/react";
+import ReactMarkdown from "react-markdown";
 
 type Specialty = {
   icon: string;
   title: string;
 };
 
-const About = () => {
+const About = ({ settings }: { settings: Settings | null }) => {
+  const about = `
+I am currently a **student developer**, and my journey in software development began the moment I wrote my first line of code. I instantly fell in love with building something from nothing, and since then, my passion for programming has only grown stronger. Every project fuels my curiosity and drives me to keep improving.
+
+I specialize in creating **modern web applications** and **mobile solutions** that blend clean, maintainable code, thoughtful and elegant design, and continuous learning and innovation. Each project is an opportunity to **grow**, **experiment**, and **deliver meaningful results**.
+`;
   const specialties: Specialty[] = [
     {
       icon: "💻",
@@ -74,23 +81,22 @@ const About = () => {
           <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             About Me
           </h2>
-          <div className="w-20 h-1.5 bg-gradient-to-r from-primary to-secondary rounded-full mb-8"></div>
+          <div className="w-20 h-1.5 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
         </div>
 
         <div className="space-y-6 text-lg text-base-content/80 leading-relaxed">
-          <p>
-            I am currently a student, and my journey in software development
-            began the first time I wrote code. I instantly fell in love with the
-            process of creating something from scratch, and since then, my
-            passion for coding has only grown.
-          </p>
-
-          <p>
-            I specialize in building modern web applications and mobile
-            solutions that combine clean code with elegant design. Every project
-            is an opportunity to learn, innovate, and deliver exceptional
-            results.
-          </p>
+          {settings ? (
+            <div className="prose max-w-none prose-p:mb-6">
+              <ReactMarkdown>{about}</ReactMarkdown>
+            </div>
+          ) : (
+            <p>
+              I am currently a student, and my journey in software development
+              began the first time I wrote code. I instantly fell in love with
+              the process of creating something from scratch, and since then, my
+              passion for coding has only grown.
+            </p>
+          )}
 
           <div className="pt-4">
             <a

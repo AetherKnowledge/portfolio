@@ -8,4 +8,6 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/Project'
+export type * from './models/Settings'
 export type * from './commonInputTypes'

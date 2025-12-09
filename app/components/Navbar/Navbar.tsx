@@ -1,11 +1,20 @@
 "use client";
 
+import { Settings } from "@/app/generated/prisma/client";
+import { signout } from "@/lib/supabase/auth-actions";
+import { LogOut } from "lucide-react";
 import { useEffect, useState } from "react";
 import ThemeController from "../ThemeController";
 import NavbarItemCenter from "./NavbarItemCenter";
 import NavbarItemSidebar from "./NavbarItemSidebar";
 
-const Navbar = () => {
+const Navbar = ({
+  settings,
+  isAdmin = false,
+}: {
+  settings: Settings | null;
+  isAdmin?: boolean;
+}) => {
   const navbarItems = [
     { section: "home", label: "Home" },
     { section: "about", label: "About" },
@@ -98,7 +107,7 @@ const Navbar = () => {
           </ul>
         </div>
         <a className="btn btn-ghost text-xl font-bold hover:text-primary transition-colors">
-          JC Rosuelo
+          {settings ? settings.name : "My Portfolio"}
         </a>
       </div>
       <div className="navbar-center hidden lg:flex">
@@ -114,8 +123,18 @@ const Navbar = () => {
           ))}
         </ul>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-end gap-2">
         <ThemeController />
+        {isAdmin && (
+          <button
+            onClick={() => signout()}
+            className="btn btn-ghost btn-sm gap-2 hover:text-error transition-colors"
+            aria-label="Logout"
+          >
+            <LogOut size={18} />
+            <span className="hidden sm:inline">Logout</span>
+          </button>
+        )}
       </div>
     </div>
   );

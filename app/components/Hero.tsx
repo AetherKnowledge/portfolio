@@ -1,23 +1,11 @@
 "use client";
 
+import { Settings } from "@/app/generated/prisma/browser";
 import { motion } from "motion/react";
 import { FaCode } from "react-icons/fa6";
 import Marquee from "./Marquee";
 
-const Hero = () => {
-  const skills = [
-    "HTML",
-    "CSS",
-    "Typescript",
-    "Next.js",
-    "React",
-    "Java",
-    "C#",
-    "Python",
-    "Visual Basic",
-    "Godot",
-  ];
-
+const Hero = ({ settings }: { settings: Settings | null }) => {
   return (
     <>
       {/* Hero Section */}
@@ -35,8 +23,12 @@ const Hero = () => {
             <span>Hello</span>
             <span className="text-primary">.</span>
           </div>
-          <h3 className="text-3xl">I’m John Christian Rosuelo</h3>
-          <h1 className="text-5xl font-bold mt-2">Software Developer</h1>
+          <h3 className="text-3xl">
+            I’m {settings ? settings.name : "John Christian Rosuelo"}
+          </h3>
+          <h1 className="text-5xl font-bold mt-2">
+            {settings ? settings.job : "Software Developer"}
+          </h1>
           <div className="flex gap-4 mt-10">
             <a href="#contact" className="btn btn-primary w-35 shadow-xl">
               Got a project?
@@ -65,7 +57,7 @@ const Hero = () => {
       {/* Skills Bar */}
       <div className="relative overflow-hidden border-y border-base-300 bg-gradient-to-r from-base-100 via-base-200 to-base-100 px-6 py-8">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5"></div>
-        <Marquee items={skills} from={0} to="-100%" />
+        <Marquee items={settings ? settings.skills : []} from={0} to="-100%" />
       </div>
     </>
   );
