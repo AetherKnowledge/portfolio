@@ -67,7 +67,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="navbar bg-base-100 text-base-content shadow-sm z-100 sticky top-0">
+    <div className="navbar backdrop-blur-md bg-base-100/80 text-base-content shadow-lg border-b border-base-300/50 z-50 sticky top-0">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -97,7 +97,9 @@ const Navbar = () => {
             ))}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">John Christian Rosuelo</a>
+        <a className="btn btn-ghost text-xl font-bold hover:text-primary transition-colors">
+          JC Rosuelo
+        </a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 gap-4">

@@ -52,18 +52,20 @@ const Hero = () => {
 
         {/* Hidden when not on mobile */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          className="mt-10 hidden lg:block lg:mt-0"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1, rotate: [0, 5, -5, 0] }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="mt-16 hidden lg:block lg:mt-0 relative"
         >
-          <FaCode className="w-80 h-80" />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-3xl"></div>
+          <FaCode className="w-80 h-80 relative z-10 text-primary/80" />
         </motion.div>
       </section>
 
       {/* Skills Bar */}
-      <div className="overflow-hidden border-t border-b border-base-300 bg-base-100/50 px-6 py-6">
-        <Marquee items={skills} from={0} to={"-100%"} />
+      <div className="relative overflow-hidden border-y border-base-300 bg-gradient-to-r from-base-100 via-base-200 to-base-100 px-6 py-8">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5"></div>
+        <Marquee items={skills} from={0} to="-100%" />
       </div>
     </>
   );
