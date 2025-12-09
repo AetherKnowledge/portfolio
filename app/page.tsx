@@ -1,12 +1,12 @@
 import About from "./components/About";
 import FloatingChatbotButton from "./components/Chatbot/FloatingChatbotButton";
-import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import { getProjects } from "./components/Projects/ProjectActions";
 import Projects from "./components/Projects/Projects";
 import { getSettings } from "./components/SettingsActions";
+import Contact from "./Contact";
 
 export default async function Home() {
   const projects = await getProjects();

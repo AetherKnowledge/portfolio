@@ -3,7 +3,7 @@
 import { env } from "next-runtime-env";
 import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { generateToken } from "./ChatbotActions";
+import { generateToken } from "../N8NActions";
 import MessageBubble from "./MessageBubble";
 import { Message, UserType } from "./types";
 
